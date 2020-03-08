@@ -1,12 +1,12 @@
 <?php
 
-class Daily extends Tariff
+class DailyTariff extends Tariff
 {
-    public $name = 'Тариф суточный';
-    public $priceDistance = 1;
-    public $priceTime = 1000;
+    protected $name = 'Тариф суточный';
+    protected $priceDistance = 1;
+    protected $priceTime = 1000;
 
-    use AddonDriver;
+    use AddDriver;
 
     public function __construct(int $distance, int $time, int $age, $arrAddon = [])
     {
@@ -22,10 +22,10 @@ class Daily extends Tariff
 
         $sum = ($this->distance * $this->priceDistance + $this->time * $this->priceTime) * $this->indexAge($this->age);
         if ($this->addGPS) {
-            $sum += $this->time * 24 * $this->priceAddGPS;
+            $sum += $this->calculateAddGPS($this->time * 24);
         }
         if ($this->addDriver) {
-            $sum += $this->priceAddDriver;
+            $sum += $this->calculateAddDriver();
         }
         return $sum;
     }

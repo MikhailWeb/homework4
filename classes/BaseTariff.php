@@ -1,9 +1,9 @@
 <?php
 
-class Base extends Tariff
+class BaseTariff extends Tariff
 {
-    public $name = 'Тариф базовый';
-    public $priceDistance = 10;
-    public $priceTime = 3;
+    protected $name = 'Тариф базовый';
+    protected $priceDistance = 10;
+    protected $priceTime = 3;
 
 }

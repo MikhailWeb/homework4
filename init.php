@@ -1,7 +1,9 @@
 <?php
-include 'classes/interface.tariff.php';
-include 'classes/class.tariff.php';
-include 'classes/class.base.php';
-include 'classes/class.hourly.php';
-include 'classes/class.daily.php';
-include 'classes/class.student.php';
+include 'classes/TariffInterface.php';
+include 'classes/AddGPS.php';
+include 'classes/AddDriver.php';
+include 'classes/Tariff.php';
+include 'classes/BaseTariff.php';
+include 'classes/HourlyTariff.php';
+include 'classes/DailyTariff.php';
+include 'classes/StudentTariff.php';

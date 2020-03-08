@@ -1,31 +1,19 @@
 <?php
 
-trait AddonGPS
+abstract class Tariff implements TariffInterface
 {
-    public $addGPS = false;
-    public $priceAddGPS = 15;
-}
+    protected $name;
+    protected $driverMinAge = 18;
+    protected $driverMaxAge = 65;
+    protected $driverRiskAge = 21;
+    protected $driverRiskPercent = 10;
+    protected $priceDistance;
+    protected $distance;
+    protected $priceTime;
+    protected $time;
+    protected $age;
 
-trait AddonDriver
-{
-    public $addDriver = false;
-    public $priceAddDriver = 100;
-}
-
-abstract class Tariff implements iTariff
-{
-    public $name;
-    public $driverMinAge = 18;
-    public $driverMaxAge = 65;
-    public $driverRiskAge = 21;
-    public $driverRiskPercent = 10;
-    public $priceDistance;
-    public $distance;
-    public $priceTime;
-    public $time;
-    public $age;
-
-    use AddonGPS;
+    use AddGPS;
 
     public function __construct(int $distance, int $time, int $age, $arrAddon = [])
     {
@@ -45,20 +33,21 @@ abstract class Tariff implements iTariff
             $this->time = ($this->time < 1) ? 1 : $this->time;
             $hour = (bcmod($this->time, 60) > 0) ? 1 : 0;
             $this->time = intdiv($this->time, 60) + $hour;
-            $sum += $this->time * $this->priceAddGPS;
+            $sum += $this->calculateAddGPS($this->time);
         }
         return $sum;
     }
 
-    public function checkAge($age)
+    private function checkAge($age)
     {
         if (($age < $this->driverMinAge) || ($age > $this->driverMaxAge)) {
-            die('sharing auto impossible');
+            die('Прокат автомобилей запрещен по возрасту');
         } else {
             return true;
         }
     }
 
+    // пока оставил пабликом для вывода формулы расчета в index.php
     public function indexAge(int $age)
     {
         $index = 1;

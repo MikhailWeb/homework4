@@ -1,12 +1,12 @@
 <?php
 
-class Hourly extends Tariff
+class HourlyTariff extends Tariff
 {
-    public $name = 'Тариф почасовой';
-    public $priceDistance = 0;
-    public $priceTime = 200;
+    protected $name = 'Тариф почасовой';
+    protected $priceDistance = 0;
+    protected $priceTime = 200;
 
-    use AddonDriver;
+    use AddDriver;
 
     public function __construct(int $distance, int $time, int $age, $arrAddon = [])
     {
@@ -22,10 +22,10 @@ class Hourly extends Tariff
 
         $sum = ($this->distance * $this->priceDistance + $this->time * $this->priceTime) * $this->indexAge($this->age);
         if ($this->addGPS) {
-            $sum += $this->time * $this->priceAddGPS;
+            $sum += $this->calculateAddGPS($this->time);
         }
         if ($this->addDriver) {
-            $sum += $this->priceAddDriver;
+            $sum += $this->calculateAddDriver();
         }
         return $sum;
     }
